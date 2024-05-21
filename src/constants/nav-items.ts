@@ -269,7 +269,7 @@ export const NavbarItems = [
     ],
   },
   {
-    label: "Artist Merchandise",
+    label: "Artists",
     children: [
       {
         label: "Comedy",
@@ -349,10 +349,6 @@ export const NavbarItems = [
           { label: "Moonshine", link: "/" },
           { label: "SensibleTshirts", link: "/" },
         ],
-      },
-      {
-        label: "VIEW ALL",
-        children: [],
       },
     ],
   },

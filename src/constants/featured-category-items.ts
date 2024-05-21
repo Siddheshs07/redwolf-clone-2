@@ -36,7 +36,7 @@ export const featuredCategoryItems = [
     url: "/assets/images/featuredcategories/drop-cut-t-shirts-india-featured-480x480.jpg",
   },
   {
-    title: "women oversized t-shirts",
+    title: "women oversized",
     url: "/assets/images/featuredcategories/womens-oversized-t-shirts-featured-480x480.jpg",
   },
   {

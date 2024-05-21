@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${
           process.env.NODE_ENV == "development" ? "debug-screens" : ""
-        } mx-auto w-full max-w-full`}
+        }`}
       >
         <Navbar />
         {children}

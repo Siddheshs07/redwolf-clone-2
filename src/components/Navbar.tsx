@@ -1,110 +1,92 @@
 "use client";
-
-import Image from "next/image";
-import { FaInfoCircle, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
-import logo from "../../public/assets/images/rw-logo-gif-transparent-red.jpg";
 import Link from "next/link";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoIosArrowDown } from "react-icons/io";
+import logo from "../../public/assets/images/rw-logo-gif-transparent-red.jpg";
+import Image from "next/image";
+import { FaInfoCircle, FaShoppingCart, FaUser } from "react-icons/fa";
 import { NavbarItems } from "@/constants/nav-items";
-import { NavItems } from "../types/index";
+import { IoIosArrowDown } from "react-icons/io";
+import SearchBar from "./SearchBar";
+import { FaLocationDot } from "react-icons/fa6";
 import { FiMenu } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
-import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { NavItems } from "@/types";
 const Navbar = () => {
   const [animationParent] = useAutoAnimate();
-  const [isSideMenuOpen, setSideMenue] = useState(false);
+  const [isSideMenuOpen, setSideMenu] = useState(false);
   function openSideMenu() {
-    setSideMenue(true);
+    setSideMenu(true);
   }
   function closeSideMenu() {
-    setSideMenue(false);
+    setSideMenu(false);
   }
-
   return (
-    <div className="mx-auto flex w-full max-w-full justify-between text-sm border-b-2 shadow-sm bg-white">
-      {/* mobile nav */}
+    <div className="flex justify-between items-center text-sm border-b shadow-sm">
+      {/* for mobile and tablet responsiveness */}
       <FiMenu
         onClick={openSideMenu}
-        className="cursor-pointer text-4xl content-center xl:hidden"
+        className="cursor-pointer text-4xl content-center md:hidden"
       />
-      {/* left section */}
 
-      <section className="flex items-center gap-10">
-        {/* logo */}
-        <div className="m-1 flex justify-between items-center gap-2">
+      {/* left section */}
+      <div className="flex items-center gap-4">
+        <div className="m-1 flex justify-between items-center gap-[10px]">
           <Link href="/">
-            <Image
+            {/* <Image
               src={logo}
               alt="logo"
               priority={true}
               width={170}
               height={55}
-              className="w-44 h-14 md:content-center "
-            />
-            {/* <h1 className="text-4xl text-red-500  font-extrabold bg-gray-400 p-2 hover:text-yellow-500">
+            /> */}
+            <h1 className="text-4xl text-red-500  font-extrabold border border-gray-400 rounded-lg p-1 hover:text-yellow-500">
               REDWOLF
-            </h1> */}
+            </h1>
           </Link>
           <Link href="/cart">
             <FaShoppingCart className=" md:hidden h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400 m-2" />
           </Link>
-          <div className=" md:hidden flex items-center w-fit sm:hidden">
-            <form
-              action="#"
-              method="get"
-              className=" border-2 border-gray-300 flex items-center justify-between gap-2 p-[2px] rounded-xl w-fit"
-            >
-              <button type="button">
-                <FaSearch className=" fill-red-600 text-2xl p-1" />
-              </button>
-              <input
-                type="text"
-                name="search"
-                placeholder="Search Products..."
-              />
-            </form>
-          </div>
         </div>
         {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
-        {/* nav items */}
-        <div className="hidden  xl:flex items-center gap-16 transition-all">
+        <div className="hidden md:flex items-center gap-10 transition-all">
           {NavbarItems.map((item, index) => (
             <div
               key={index}
-              className=" relative group px-2 py-3 transition-all "
+              className="relative group px-2 py-2 transition-all "
             >
-              <Link href={""}>
-                <p className="flex cursor-pointer items-center gap-2 text-neutral-600 group-hover:text-red-600">
-                  <span className="text-[16px] font-semibold">
+              <Link href="">
+                <p className="flex items-center text-neutral-600 group-hover:text-red-600">
+                  <span className="text-sm font-semibold uppercase">
                     {item.label}
                   </span>
-                  <IoIosArrowDown className="rotate-180 transition-all group-hover:rotate-0" />
+                  <span className="rotate-180 transition-all group-hover:rotate-0">
+                    <IoIosArrowDown />
+                  </span>
                 </p>
               </Link>
 
-              {/* dropdown */}
-              <div className="absolute border-2 left-0 top-11 hidden w-fit h-fit flex-row rounded-lg bg-white py-3 shadow-xl transition-all group-hover:flex group-hover:justify-items-center z-50">
-                {item.children.map((child, index) => (
+              {/* dropdown menu */}
+              <div className="fixed border left-0 top-12 hidden w-screen flex-row  rounded-lg bg-white py-3 shadow-lg transition-all group-hover:flex z-50 ">
+                {item.children.map((child, childIndex) => (
                   <div
-                    className="py-1 px-[6px] text-neutral-400 hover:text-red-600 m-2"
-                    key={index}
+                    key={childIndex}
+                    className="m-2 py-1 px-1 text-neutral-500 hover:text-red-600"
                   >
-                    <div className="uppercase text-left text-red-600 cursor-default font-semibold">
+                    <p className="text-left uppercase text-red-500 font-semibold cursor-default">
                       {child.label}
-                    </div>
-                    <div className="flex flex-col ">
+                    </p>
+                    <div className="flex flex-col">
                       {child.children
-                        .slice(0, 15)
-                        .map((childItem, childItemIndex) => (
+                        .slice(0, 12)
+                        .map((children, childrenIndex) => (
                           <Link
-                            key={childItemIndex}
-                            href={childItem.link}
-                            className="cursor-pointer items-center py-1 px-3 text-neutral-400 hover:text-red-600"
+                            key={childrenIndex}
+                            href={children.link}
+                            className="cursor-pointer py-1 px-2 text-neutral-500 hover:text-red-500"
                           >
-                            <p className="uppercase text-left mt-1">
-                              {childItem.label}
+                            <p className="m-1 text-left uppercase">
+                              {children.label}
                             </p>
                           </Link>
                         ))}
@@ -115,52 +97,42 @@ const Navbar = () => {
             </div>
           ))}
         </div>
-      </section>
-
+      </div>
+      {/* search bar section */}
+      <div className="max-md:hidden m-0 p-0 flex items-center">
+        <SearchBar />
+      </div>
       {/* right section */}
-      <section className="hidden md:flex items-center gap-8 m-2 ">
-        {/* search bar section */}
-        <div className="flex items-center">
-          <form
-            action="#"
-            method="get"
-            className=" border-2 border-gray-300 flex items-center justify-between gap-2 p-[2px] rounded-xl"
-          >
-            <button type="button" disabled>
-              <FaSearch className=" fill-red-600 text-2xl p-1" />
-            </button>
-            <input
-              type="text"
-              name="search"
-              placeholder="Search Products..."
-              className="p-1"
-            />
-          </form>
-        </div>
-        <div className=" flex items-center justify-between gap-14 p-1 mx-auto">
+      <div className="hidden md:flex items-center justify-between gap-2">
+        <div className="p-4">
           <Link href="/about">
-            <FaInfoCircle className="h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400" />
-          </Link>
-          <Link href="/track">
-            <FaLocationDot className="h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400" />
-          </Link>
-          <Link href="/user">
-            <FaUser className="h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400" />
-          </Link>
-          <Link href="/cart">
-            <FaShoppingCart className="h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+            <FaInfoCircle className=" text-3xl fill-red-600  transition-all hover:fill-gray-400 " />
           </Link>
         </div>
-      </section>
+        <div className="p-4">
+          <Link href="/track">
+            <FaLocationDot className=" text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+          </Link>
+        </div>
+        <div className="p-4">
+          <Link href="/user">
+            <FaUser className=" text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+          </Link>
+        </div>
+        <div className="p-4">
+          <Link href="/cart">
+            <FaShoppingCart className=" text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
-
 export default Navbar;
 
 function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
   return (
-    <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-start bg-black/60 xl:hidden">
+    <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-start bg-black/60 xl:hidden z-50">
       <div className="h-full w-[65%]  bg-white px-4 py-4">
         {/* close button */}
         <section className="flex justify-end">
