@@ -10,8 +10,8 @@ const Footer = () => {
     <footer className=" flex flex-col text-black-100 mt-5 border-t border-gray-100">
       <div className=" flex max-md:flex-col  flex-wrap justify-between gap-5 sm:px-16 px-6 py-10">
         <div className="footer__links">
-          {footerLinks.map((e) => (
-            <div key={e.title} className="footer__link">
+          {footerLinks.map((e, i) => (
+            <div key={i} className="footer__link">
               <h3 className=" font-bold">{e.title}</h3>
               {e.link.map((item) => {
                 return (

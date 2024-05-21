@@ -16,8 +16,8 @@ export interface Product extends Document {
 }
 
 const ProductSchema: Schema = new mongoose.Schema({
-  _id: {
-    type: String,
+  id: {
+    type: Number,
     required: true,
   },
   brandName: {
@@ -46,6 +46,10 @@ const ProductSchema: Schema = new mongoose.Schema({
   },
   productSize: {
     type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
     required: true,
   },
   link: {

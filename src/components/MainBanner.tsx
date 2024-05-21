@@ -19,8 +19,8 @@ const MainBanner = () => {
         NextIcon={<GrCaretNext />}
         PrevIcon={<GrCaretPrevious />}
       >
-        {slides.map((e) => (
-          <Link href="/">
+        {slides.map((e, i) => (
+          <Link key={i} href="/">
             <Image
               src={e.url}
               alt={e.title}

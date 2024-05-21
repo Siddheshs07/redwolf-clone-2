@@ -36,8 +36,8 @@ const TopBanner = () => {
         autoPlaySpeed={3000}
         arrows={false}
       >
-        {slides.map((e) => (
-          <Link href="/">
+        {slides.map((e, i) => (
+          <Link key={i} href="/">
             <Image
               src={e.url}
               alt={e.title}

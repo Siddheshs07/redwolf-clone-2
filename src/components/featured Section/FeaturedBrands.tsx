@@ -37,12 +37,12 @@ const FeaturedBrands = () => {
         showDots={false}
         infinite={true}
         autoPlay={true}
-        autoPlaySpeed={4000}
+        autoPlaySpeed={2000}
         arrows={false}
         className="mb-2"
       >
-        {slides.map((e) => (
-          <div className="flex flex-col justify-center items-center ">
+        {slides.map((e, i) => (
+          <div key={i} className="flex flex-col justify-center items-center ">
             <Link href="/">
               <Image
                 src={e.url}

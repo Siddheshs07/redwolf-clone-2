@@ -39,8 +39,8 @@ const Press = () => {
         arrows={false}
         className="mb-2"
       >
-        {slides.map((e) => (
-          <div className="flex flex-col justify-center items-center">
+        {slides.map((e, i) => (
+          <div key={i} className="flex flex-col justify-center items-center">
             <Image
               src={e.url}
               alt={e.title}
