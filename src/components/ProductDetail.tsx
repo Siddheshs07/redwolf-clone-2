@@ -1,11 +1,13 @@
 import { getProductById } from "@/utils/fetchData";
 import Image from "next/image";
+import AddToCart from "./AddToCart";
 
 type Props = {
   productId: string;
 };
 const ProductDetail = async ({ productId }: Props) => {
   const product = await getProductById(productId);
+
   return (
     <>
       <div className="container m-auto ">
@@ -47,6 +49,7 @@ const ProductDetail = async ({ productId }: Props) => {
                 {product.productSize.split(",")}
               </span>
             </p>
+            <AddToCart item={product} />
           </div>
         </div>
       </div>

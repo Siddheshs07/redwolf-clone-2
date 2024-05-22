@@ -14,6 +14,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { NavItems } from "@/types";
 const Navbar = () => {
   const [animationParent] = useAutoAnimate();
+  const [cartItem, setCartItem] = useState(0);
   const [isSideMenuOpen, setSideMenu] = useState(false);
   function openSideMenu() {
     setSideMenu(true);
@@ -121,8 +122,11 @@ const Navbar = () => {
         </div>
         <div className="p-4">
           <Link href="/cart">
-            <FaShoppingCart className=" text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+            <FaShoppingCart className="relative text-3xl fill-red-600  transition-all hover:fill-gray-400" />
           </Link>
+          <span className="absolute top-0 right-1 bg-red-400 border rounded-full text-white text-xl p-[1.5px]">
+            {cartItem}
+          </span>
         </div>
       </div>
     </div>

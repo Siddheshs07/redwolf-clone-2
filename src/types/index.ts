@@ -8,8 +8,8 @@ export interface dataProps {
   brandName: string;
   description: string;
   gender: string;
-  finalPrice: string;
-  strickPrice: string;
+  finalPrice: number;
+  strickPrice: number;
   discount: number;
   productSize: string;
   link: string;
