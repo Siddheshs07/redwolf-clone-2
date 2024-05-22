@@ -68,5 +68,6 @@ const Product =
 export default Product;
 
 export function getallProducts() {
+  console.log(Product);
   return Product;
 }
