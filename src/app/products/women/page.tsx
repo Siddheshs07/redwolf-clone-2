@@ -1,12 +1,24 @@
+"use client";
+
 import { dataProps } from "@/types";
-import { getFemaleCloths } from "@/utils/fetchData";
+import { getProducts } from "@/redux/features/product-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import Image from "next/image";
 import Link from "next/link";
 
 type Props = {};
-const WomenClothing = async (props: Props) => {
-  const female = await getFemaleCloths();
+const WomenClothing = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const allProduct = useAppSelector((state) => state.products.data);
+  const products = allProduct?.filter(
+    (event: dataProps) => event.gender === "F"
+  );
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
   return (
     <div className="flex flex-col ">
       <div>
@@ -15,7 +27,7 @@ const WomenClothing = async (props: Props) => {
         </h1>
       </div>
       <div className="grid grid-cols-5 gap-4">
-        {female.map((product: dataProps) => {
+        {products?.map((product: dataProps) => {
           return (
             <div>
               <div

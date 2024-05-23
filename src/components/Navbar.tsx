@@ -2,17 +2,21 @@
 import Link from "next/link";
 import logo from "../../public/assets/images/rw-logo-gif-transparent-red.jpg";
 import Image from "next/image";
-import { FaInfoCircle, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaInfoCircle, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { NavbarItems } from "@/constants/nav-items";
 import { IoIosArrowDown } from "react-icons/io";
 import SearchBar from "./SearchBar";
 import { FaLocationDot } from "react-icons/fa6";
 import { FiMenu } from "react-icons/fi";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { NavItems } from "@/types";
+import { dataProps, NavItems } from "@/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const cartArray: dataProps[] = useAppSelector((state) => state.cart);
   const [animationParent] = useAutoAnimate();
   const [cartItem, setCartItem] = useState(0);
   const [isSideMenuOpen, setSideMenu] = useState(false);
@@ -22,6 +26,11 @@ const Navbar = () => {
   function closeSideMenu() {
     setSideMenu(false);
   }
+
+  useEffect(() => {
+    setCartItem(cartArray.length);
+  }, [cartArray]);
+
   return (
     <div className="flex justify-between items-center text-sm border-b shadow-sm">
       {/* for mobile and tablet responsiveness */}
@@ -41,13 +50,18 @@ const Navbar = () => {
               width={170}
               height={55}
             /> */}
-            <h1 className="text-4xl text-red-500  font-extrabold border border-gray-400 rounded-lg p-1 hover:text-yellow-500">
+            <h1 className="text-4xl max-md:text-center text-red-500  font-extrabold border border-gray-400 rounded-lg p-1 hover:text-yellow-500">
               REDWOLF
             </h1>
           </Link>
-          <Link href="/cart">
-            <FaShoppingCart className=" md:hidden h-fit text-3xl fill-red-600  transition-all hover:fill-gray-400 m-2" />
-          </Link>
+          <div className="md:hidden ">
+            <Link href="/cart">
+              <FaShoppingCart className=" relative text-3xl fill-red-600  transition-all hover:fill-gray-400" />
+            </Link>
+            <span className=" absolute top-0 bg-red-400 border rounded-full text-white text-xl ">
+              {cartItem}
+            </span>
+          </div>
         </div>
         {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
         <div className="hidden md:flex items-center gap-10 transition-all">
@@ -124,7 +138,7 @@ const Navbar = () => {
           <Link href="/cart">
             <FaShoppingCart className="relative text-3xl fill-red-600  transition-all hover:fill-gray-400" />
           </Link>
-          <span className="absolute top-0 right-1 bg-red-400 border rounded-full text-white text-xl p-[1.5px]">
+          <span className="absolute top-0  bg-red-400 border rounded-full text-white text-xl p-[1.5px]">
             {cartItem}
           </span>
         </div>
@@ -145,12 +159,33 @@ function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
             className="cursor-pointer text-4xl"
           />
         </section>
+        {/* search bar */}
+        <div className=" md:hidden ">
+          <div className=" m-1 w-full">
+            <form
+              action="#"
+              method="get"
+              className=" border-2 border-gray-300 flex items-center justify-between rounded-xl p-1"
+            >
+              <button type="button">
+                <FaSearch className=" fill-red-600 text-2xl p-1" />
+              </button>
+              <input
+                type="text"
+                name="search"
+                placeholder="Search Products..."
+                className="p-3 border border-black rounded-lg w-full"
+              />
+            </form>
+          </div>
+        </div>
         {/* login and track order section */}
-        <div className="flex items-center justify-between m-2 border-2 border-white rounded-xl bg-red-500 p-2 ">
-          <div className="w-1/3 ml-2 mr-2 p-2  border-2 border-white bg-red-700 rounded-lg">
+
+        <div className="flex flex-col mt-5">
+          <div className="w-full m-1 border-2 border-white bg-red-500 rounded-lg">
             <Link
               href="/track"
-              className="flex flex-wrap items-center justify-around"
+              className="flex flex-wrap items-center justify-center p-2 m-2"
             >
               <FaLocationDot className="h-fit text-3xl fill-white  transition-all hover:fill-gray-400 max-sm:text-sm" />
               <p className="uppercase text-lg font-medium text-white max-sm:text-sm">
@@ -158,20 +193,21 @@ function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
               </p>
             </Link>
           </div>
-          <div className="w-1/3 ml-2 p-2  border-2 border-white bg-red-700 rounded-lg">
+          <div className="w-full m-1 border-2 border-white bg-red-500 rounded-lg">
             <Link
               href="/user"
-              className="flex flex-wrap items-center justify-around"
+              className="flex flex-wrap items-center justify-center p-2 m-2"
             >
-              <FaUser className="h-fit text-3xl fill-white transition-all hover:fill-gray-400  max-sm:text-sm" />
-              <p className="uppercase text-lg font-medium text-white max-sm:text-sm ">
+              <FaUser className="h-fit text-5xl fill-white transition-all hover:fill-gray-400  max-sm:text-sm" />
+              <p className="uppercase text-xl font-medium text-white max-sm:text-sm ">
                 login
               </p>
             </Link>
           </div>
         </div>
+
         {/* mobile nav menu item */}
-        <div className="flex flex-col items-baseline  gap-16 transition-all uppercase text-xl">
+        <div className="flex flex-col items-baseline gap-8 transition-all uppercase text-base mt-6">
           {NavbarItems.map((item, index) => (
             <div key={index}>
               <SingleNavItem label={item.label}>{item.children}</SingleNavItem>
@@ -197,7 +233,7 @@ function SingleNavItem(item: NavItems) {
         ref={animationParent}
         onClick={toggleItem}
         href={item.link ?? "#"}
-        className="relative   px-2 py-3 transition-all "
+        className="relative transition-all "
       >
         <p className="flex cursor-pointer items-center gap-2 text-neutral-400 group-hover:text-black ">
           <span>{item.label}</span>
@@ -222,7 +258,7 @@ function SingleNavItem(item: NavItems) {
                   className=" flex cursor-pointer items-center  py-1 pl-6 pr-8  text-neutral-400 hover:text-black  "
                 >
                   {/* item */}
-                  <span className="whitespace-nowrap text-lg uppercase pl-3 ">
+                  <span className="whitespace-nowrap text-base uppercase pl-3 ">
                     {ch.label}
                   </span>
                 </Link>

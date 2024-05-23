@@ -1,23 +1,45 @@
 "use client";
 
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { dataProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { updateCart } from "@/redux/features/cart-slice";
 
 const CartPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const cartArray: dataProps[] = useAppSelector((state) => state.cart);
   const [cartItems, setCartItems] = useState<dataProps[]>([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setCartItems(cartArray);
+  }, [cartArray]);
 
-  const incrementCartItem = (id: number) => {};
-  const decrementCartItem = (id: number) => {};
-  const removeCartItem = (id: number) => {};
+  const incrementCartItem = (id: string) => {
+    let newCartItem = cartArray.map((item, index) =>
+      +id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    dispatch(updateCart(newCartItem));
+  };
+  const decrementCartItem = (id: string) => {
+    let newCartItem = cartArray.map((item, index) =>
+      +id === item.id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+    dispatch(updateCart(newCartItem));
+  };
+  const removeCartItem = (id: string) => {
+    let newCartItem = [...cartArray];
+    newCartItem.splice(+id, 1);
+  };
   return (
-    <div>
+    <div className="container flex items-center justify-center my-5 max-md:flex-col">
       {cartItems.length === 0 ? (
-        <div className="flex items-center justify-center flex-col">
+        <div className="flex items-center justify-between gap-4 flex-col">
           <h1 className="text-4xl text-center font-bold uppercase">
             Cart Is Empty
           </h1>
@@ -25,51 +47,73 @@ const CartPage = () => {
             <Link href="/">SHOP NOW</Link>
           </button>
         </div>
-      ) : null}
-      <div>
-        {cartItems.map((item, index) => (
-          <div>
-            <div>
-              <Image
-                src={item.link}
-                alt={item.brandName}
-                width={50}
-                height={50}
-              />
-              <h3>{item.brandName}</h3>
-            </div>
-            <div>
-              <h2>RS: {item.quantity * item.finalPrice}</h2>
-              <div className="flex items-center justify-between ">
-                <button
-                  onClick={() => {
-                    decrementCartItem(item.id);
-                  }}
-                >
-                  -
-                </button>
-                <span>{item.quantity}</span>
-                <button
-                  onClick={() => {
-                    incrementCartItem(item.id);
-                  }}
-                >
-                  +
-                </button>
+      ) : (
+        <div className="container border-2 border-black rounded-xl p-2 m-2">
+          <h1 className=" text-center text-4xl font-bold uppercase my-5 underline">
+            Cart Items
+          </h1>
+          {cartItems.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-wrap items-center justify-between border-2 border-gray-500 rounded-xl m-2 p-2 max-md:flex-col"
+            >
+              <div className="flex items-center justify-around">
+                <Image
+                  src={item.link}
+                  alt={item.brandName}
+                  width={250}
+                  height={250}
+                  className="w-40 h-40 rounded-xl"
+                />
+                <div className="flex flex-col m-4">
+                  <h3 className="text-xl font-semibold">{item.brandName}</h3>
+                  <p>
+                    <span className="font-semibold">Product Description: </span>
+                    <span>{item.description.slice(0, 55)}</span>
+                  </p>
+                </div>
               </div>
-              <div>
-                <button
-                  onClick={() => {
-                    removeCartItem(item.id);
-                  }}
-                >
-                  <MdDeleteForever />
-                </button>
+              <div className="flex flex-col gap-4 justify-center items-center ">
+                <p className="font-medium m-2">
+                  RS: {item.quantity * item.finalPrice}
+                </p>
+                <div className="flex items-center justify-between gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      decrementCartItem(item._id);
+                    }}
+                    className="cursor-pointer m-1 p-2 bg-red-500  border rounded-lg"
+                  >
+                    <p className="text-xl">-</p>
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      incrementCartItem(item._id);
+                    }}
+                    className="cursor-pointer m-1 p-2 bg-red-500  border rounded-lg"
+                  >
+                    <p className="text-xl">+</p>
+                  </button>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      removeCartItem(item._id);
+                    }}
+                    type="button"
+                    className="cursor-pointer m-1 p-2 border rounded-lg"
+                  >
+                    <MdDeleteForever className="fill-red-500 text-2xl " />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,12 +1,21 @@
-import { dataProps } from "@/types";
-import { getFeaturedProducts } from "@/utils/fetchData";
+"use client";
 
+import { getProducts } from "@/redux/features/product-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { dataProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 type Props = {};
-const FeaturedProducts = async (props: Props) => {
-  const products = await getFeaturedProducts();
+const FeaturedProducts = (props: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const allProduct = useAppSelector((state) => state.products.data);
+  const products = allProduct?.filter((event: dataProps) => event.isFeatured);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
   return (
     <div className="flex flex-col ">
       <div>
@@ -15,7 +24,7 @@ const FeaturedProducts = async (props: Props) => {
         </h1>
       </div>
       <div className="grid grid-cols-5 gap-4 border rounded-3xl m-2 max-md:grid-cols-1">
-        {products.map((product: dataProps) => {
+        {products?.map((product: dataProps) => {
           return (
             <div key={product._id}>
               <div className="flex flex-col justify-between items-center  rounded-xl">

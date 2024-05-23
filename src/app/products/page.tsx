@@ -1,11 +1,23 @@
+"use client";
+
 import { dataProps } from "@/types";
-import { getAllCloths } from "@/utils/fetchData";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { getProducts } from "@/redux/features/product-slice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-const ProductsPage = async () => {
-  const products = await getAllCloths();
+const ProductsPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const allProduct = useAppSelector((state) => state.products.data);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+  // console.log(allProduct);
+
   return (
     <div className=" flex flex-col">
       <div>
@@ -14,8 +26,8 @@ const ProductsPage = async () => {
           ALL PRODUCTS
         </h1>
       </div>
-      <div className="grid grid-cols-5 gap-4 ">
-        {products.map((product: dataProps) => {
+      <div className="grid grid-cols-5 gap-4 max-md:grid-cols-1 ">
+        {allProduct?.map((product: dataProps) => {
           return (
             <div
               key={product._id}
@@ -29,6 +41,7 @@ const ProductsPage = async () => {
                     alt={product.brandName}
                     width={200}
                     height={200}
+                    priority={true}
                     className="p-4 w-80 h-96 rounded-[2.5rem]"
                   />
                 </Link>

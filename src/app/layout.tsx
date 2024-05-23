@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Epilogue } from "next/font/google";
 import "./globals.css";
 import { Footer, Navbar } from "@/components";
+import AppProvider from "../redux/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const epilogue = Epilogue({ subsets: ["latin"] });
@@ -23,9 +24,11 @@ export default function RootLayout({
           process.env.NODE_ENV == "development" ? "debug-screens" : ""
         }`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <AppProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );
