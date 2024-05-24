@@ -14,7 +14,7 @@ const SingleProductPage = ({ params }: { params: { productId: string } }) => {
   const products = allProduct?.find(
     (event: dataProps) => event._id === params.productId
   );
-  console.log(products);
+  // console.log(products);
   useEffect(() => {
     dispatch(getProducts());
   }, []);
@@ -40,18 +40,16 @@ const SingleProductPage = ({ params }: { params: { productId: string } }) => {
               <span>{products?.description}</span>
             </p>
             <p className="text-gray-600 ">
-              <span className="font-semibold">MRP:</span>
-              <span className=" text-gray-400 line-through ">
-                {products?.strickPrice}
-              </span>
+              <span className="font-semibold">MRP: </span>
+              <span className="line-through ">{products?.strickPrice} ₹</span>
             </p>
             <p className="text-gray-600">
-              <span className="font-semibold">Final Price:</span>
-              <span>{products?.finalPrice}</span>
+              <span className="font-semibold">Final Price: </span>
+              <span>{products?.finalPrice} ₹</span>
             </p>
             <p className="text-gray-600">
               <span className="font-semibold">Discount: </span>
-              <span>{products?.discount}%</span>
+              <span>{products?.discount} %</span>
             </p>
             <p className=" cursor-pointer text-gray-600">
               <span className="font-semibold"> Size: </span>

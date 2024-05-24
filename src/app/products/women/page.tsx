@@ -48,10 +48,15 @@ const WomenClothing = (props: Props) => {
                 <div className=" text-justify">
                   <h1 className="font-bold">{product.brandName}</h1>
                   <p>
-                    <span>RS:</span>
-                    <span className=" line-through">{product.strickPrice}</span>
+                    <span>MRP: </span>
+                    <span className=" line-through">
+                      {product.strickPrice} ₹
+                    </span>
                   </p>
-                  <p> RS. {product.finalPrice} </p>
+                  <p>
+                    <span>Final Price: </span>
+                    <span>{product.finalPrice} ₹</span>
+                  </p>
                 </div>
               </div>
             </div>

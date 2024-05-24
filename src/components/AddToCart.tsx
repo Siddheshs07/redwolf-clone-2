@@ -40,7 +40,7 @@ const AddToCart = ({ products }: any) => {
   };
 
   useEffect(() => {
-    console.log("cartArray", cartArray);
+    // console.log("cartArray", cartArray);
   }, [cartArray]);
   return (
     <div>

@@ -18,26 +18,26 @@ const CartPage = () => {
     setCartItems(cartArray);
   }, [cartArray]);
 
-  const incrementCartItem = (id: string) => {
+  const incrementCartItem = (id: number) => {
     let newCartItem = cartArray.map((item, index) =>
-      +id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+      id === item.id ? { ...item, quantity: item.quantity + 1 } : item
     );
     dispatch(updateCart(newCartItem));
   };
-  const decrementCartItem = (id: string) => {
+  const decrementCartItem = (id: number) => {
     let newCartItem = cartArray.map((item, index) =>
-      +id === item.id && item.quantity > 1
+      id === item.id && item.quantity > 1
         ? { ...item, quantity: item.quantity - 1 }
         : item
     );
     dispatch(updateCart(newCartItem));
   };
-  const removeCartItem = (id: string) => {
+  const removeCartItem = (id: number) => {
     let newCartItem = [...cartArray];
-    newCartItem.splice(+id, 1);
+    newCartItem.splice(id, 1);
   };
   return (
-    <div className="container flex items-center justify-center my-5 max-md:flex-col">
+    <div className="flex items-center justify-center my-8 w-full p-2 max-md:flex-col">
       {cartItems.length === 0 ? (
         <div className="flex items-center justify-between gap-4 flex-col">
           <h1 className="text-4xl text-center font-bold uppercase">
@@ -48,14 +48,14 @@ const CartPage = () => {
           </button>
         </div>
       ) : (
-        <div className="container border-2 border-black rounded-xl p-2 m-2">
+        <div className=" w-full border-2 border-black rounded-xl p-2 m-0">
           <h1 className=" text-center text-4xl font-bold uppercase my-5 underline">
             Cart Items
           </h1>
           {cartItems.map((item, index) => (
             <div
               key={index}
-              className="flex flex-wrap items-center justify-between border-2 border-gray-500 rounded-xl m-2 p-2 max-md:flex-col"
+              className="flex flex-wrap items-center justify-between border border-gray-500 rounded-xl m-2 p-2 mb-6 max-md:flex-col"
             >
               <div className="flex items-center justify-around">
                 <Image
@@ -75,38 +75,38 @@ const CartPage = () => {
               </div>
               <div className="flex flex-col gap-4 justify-center items-center ">
                 <p className="font-medium m-2">
-                  RS: {item.quantity * item.finalPrice}
+                  {item.quantity * item.finalPrice} ₹
                 </p>
                 <div className="flex items-center justify-between gap-4">
                   <button
                     type="button"
                     onClick={() => {
-                      decrementCartItem(item._id);
+                      decrementCartItem(item.id);
                     }}
                     className="cursor-pointer m-1 p-2 bg-red-500  border rounded-lg"
                   >
-                    <p className="text-xl">-</p>
+                    <p className="text-xl text-white">-</p>
                   </button>
                   <span>{item.quantity}</span>
                   <button
                     type="button"
                     onClick={() => {
-                      incrementCartItem(item._id);
+                      incrementCartItem(item.id);
                     }}
                     className="cursor-pointer m-1 p-2 bg-red-500  border rounded-lg"
                   >
-                    <p className="text-xl">+</p>
+                    <p className="text-xl text-white">+</p>
                   </button>
                 </div>
                 <div className="flex items-center justify-center">
                   <button
-                    onClick={() => {
-                      removeCartItem(item._id);
-                    }}
                     type="button"
-                    className="cursor-pointer m-1 p-2 border rounded-lg"
+                    className="bg-red-500 cursor-pointer m-1 p-2 border rounded-lg"
+                    onClick={() => {
+                      removeCartItem(item.id);
+                    }}
                   >
-                    <MdDeleteForever className="fill-red-500 text-2xl " />
+                    <MdDeleteForever className="fill-white text-2xl " />
                   </button>
                 </div>
               </div>

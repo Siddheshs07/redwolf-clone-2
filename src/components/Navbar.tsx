@@ -15,11 +15,12 @@ import { dataProps, NavItems } from "@/types";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 const Navbar = () => {
+  const [animationParent] = useAutoAnimate();
+  const [isSideMenuOpen, setSideMenu] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const cartArray: dataProps[] = useAppSelector((state) => state.cart);
-  const [animationParent] = useAutoAnimate();
   const [cartItem, setCartItem] = useState(0);
-  const [isSideMenuOpen, setSideMenu] = useState(false);
+
   function openSideMenu() {
     setSideMenu(true);
   }
