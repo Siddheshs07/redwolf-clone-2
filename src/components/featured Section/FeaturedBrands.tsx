@@ -28,7 +28,7 @@ const FeaturedBrands = () => {
     },
   };
   return (
-    <div className="w-full m-0 my-5">
+    <div className="w-full  my-5">
       <h1 className="text-2xl font-bold mb-1  text-center uppercase">
         Featured Brands
       </h1>
@@ -47,10 +47,10 @@ const FeaturedBrands = () => {
               <Image
                 src={e.url}
                 alt={e.title}
-                width={150}
-                height={75}
+                width={140}
+                height={115}
                 key={e.title}
-                className="rounded-[35px] m-5"
+                className="m-5"
               />
             </Link>
           </div>

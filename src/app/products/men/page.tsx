@@ -1,22 +1,11 @@
-"use client";
 import { dataProps } from "@/types";
-import { getProducts } from "@/redux/features/product-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { getMaleCloths } from "@/utils/fetchData";
+
 import Image from "next/image";
 import Link from "next/link";
 
-type Props = {};
-const MenClothing = (props: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const allProduct = useAppSelector((state) => state.products.data);
-  const products = allProduct?.filter(
-    (event: dataProps) => event.gender === "M"
-  );
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+const MenClothing = async () => {
+  const products = await getMaleCloths();
   return (
     <div className="flex flex-col ">
       <div>

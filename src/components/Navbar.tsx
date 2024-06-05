@@ -14,6 +14,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { dataProps, NavItems } from "@/types";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
+import { BiMinus, BiPlus } from "react-icons/bi";
 const Navbar = () => {
   const [animationParent] = useAutoAnimate();
   const [isSideMenuOpen, setSideMenu] = useState(false);
@@ -37,12 +38,12 @@ const Navbar = () => {
       {/* for mobile and tablet responsiveness */}
       <FiMenu
         onClick={openSideMenu}
-        className="cursor-pointer text-4xl content-center md:hidden"
+        className="cursor-pointer text-4xl content-center lg:hidden"
       />
 
       {/* left section */}
       <div className="flex items-center gap-4">
-        <div className="m-1 flex justify-between items-center gap-[10px]">
+        <div className="m-1 flex justify-between items-center gap-10">
           <Link href="/">
             {/* <Image
               src={logo}
@@ -51,7 +52,7 @@ const Navbar = () => {
               width={170}
               height={55}
             /> */}
-            <h1 className="text-4xl max-md:text-center text-red-500  font-extrabold border border-gray-400 rounded-lg p-1 hover:text-yellow-500">
+            <h1 className="text-4xl lg:text-center text-red-500  font-extrabold border border-gray-400 rounded-lg p-1 hover:text-yellow-500">
               REDWOLF
             </h1>
           </Link>
@@ -115,11 +116,11 @@ const Navbar = () => {
         </div>
       </div>
       {/* search bar section */}
-      <div className="max-md:hidden m-0 p-0 flex items-center">
+      <div className="lg:hidden m-0 p-0 flex items-center">
         <SearchBar />
       </div>
       {/* right section */}
-      <div className="hidden md:flex items-center justify-between gap-2">
+      <div className="hidden lg:flex items-center justify-between gap-2">
         <div className="p-4">
           <Link href="/about">
             <FaInfoCircle className=" text-3xl fill-red-600  transition-all hover:fill-gray-400 " />
@@ -151,65 +152,52 @@ export default Navbar;
 
 function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
   return (
-    <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-start bg-black/60 xl:hidden z-50">
-      <div className="h-full w-[65%]  bg-white px-4 py-4">
+    <div className="absolute left-0 top-0 flex h-full min-h-screen w-full justify-start bg-black/60 xl:hidden z-50">
+      <div className="h-full w-[80%] bg-white px-4 py-4">
         {/* close button */}
-        <section className="flex justify-end">
+        <section className="flex justify-end mb-3">
           <AiOutlineClose
             onClick={closeSideMenu}
-            className="cursor-pointer text-4xl"
+            className="cursor-pointer text-4xl "
           />
         </section>
-        {/* search bar */}
-        <div className=" md:hidden ">
-          <div className=" m-1 w-full">
-            <form
-              action="#"
-              method="get"
-              className=" border-2 border-gray-300 flex items-center justify-between rounded-xl p-1"
-            >
-              <button type="button">
-                <FaSearch className=" fill-red-600 text-2xl p-1" />
-              </button>
-              <input
-                type="text"
-                name="search"
-                placeholder="Search Products..."
-                className="p-3 border border-black rounded-lg w-full"
-              />
-            </form>
-          </div>
-        </div>
         {/* login and track order section */}
 
-        <div className="flex flex-col mt-5">
-          <div className="w-full m-1 border-2 border-white bg-red-500 rounded-lg">
-            <Link
-              href="/track"
-              className="flex flex-wrap items-center justify-center p-2 m-2"
-            >
-              <FaLocationDot className="h-fit text-3xl fill-white  transition-all hover:fill-gray-400 max-sm:text-sm" />
-              <p className="uppercase text-lg font-medium text-white max-sm:text-sm">
-                track
-              </p>
+        <div className="flex items-center w-full h-14 justify-start  bg-red-600 p-1">
+          <div className="flex items-center justify-center w-full h-6 border  bg-[#a40f22] ml-3 my-[10px]">
+            <Link href="/user">
+              <div className="flex items-center justify-center gap-4">
+                <p className="  transition-all hover:fill-gray-400  md:text-sm">
+                  <FaLocationDot className="fill-white" />
+                </p>
+                <p className="uppercase font-medium text-white md:text-sm ">
+                  track
+                </p>
+              </div>
             </Link>
           </div>
-          <div className="w-full m-1 border-2 border-white bg-red-500 rounded-lg">
-            <Link
-              href="/user"
-              className="flex flex-wrap items-center justify-center p-2 m-2"
-            >
-              <FaUser className="h-fit text-5xl fill-white transition-all hover:fill-gray-400  max-sm:text-sm" />
-              <p className="uppercase text-xl font-medium text-white max-sm:text-sm ">
-                login
-              </p>
+
+          <div className="flex items-center justify-center w-full h-6 border  bg-[#a40f22]  ml-2 mr-3 my-[10px]">
+            <Link href="/user">
+              <div className="flex items-center justify-center gap-4">
+                <p className="  transition-all hover:fill-gray-400  md:text-sm">
+                  <FaUser className="fill-white" />
+                </p>
+                <p className="uppercase font-medium text-white md:text-sm ">
+                  login
+                </p>
+              </div>
             </Link>
           </div>
         </div>
 
+        <h1 className="text-center mt-3 text-lg uppercase text-red-600 border-b ">
+          Shop By category
+        </h1>
+
         {/* mobile nav menu item */}
-        <div className="flex flex-col items-baseline gap-8 transition-all uppercase text-base mt-6">
-          {NavbarItems.map((item, index) => (
+        <div className="flex flex-col items-start justify-center gap-2 transition-all capitalize text-base mt-3">
+          {NavbarItems.slice(1).map((item, index) => (
             <div key={index}>
               <SingleNavItem label={item.label}>{item.children}</SingleNavItem>
             </div>
@@ -236,38 +224,34 @@ function SingleNavItem(item: NavItems) {
         href={item.link ?? "#"}
         className="relative transition-all "
       >
-        <p className="flex cursor-pointer items-center gap-2 text-neutral-400 group-hover:text-black ">
-          <span>{item.label}</span>
-          {item.children && (
-            // rotate-180
-            <IoIosArrowDown
-              className={`text-xs transition-all  ${
-                isItemOpen && " rotate-180"
-              }`}
-            />
-          )}
-        </p>
+        <div className="flex items-center justify-between cursor-pointer text-zinc-900 border-b">
+          <div>{item.label}</div>
+          <div>{item.children && isItemOpen ? <BiMinus /> : <BiPlus />}</div>
+        </div>
       </Link>
       {/* dropdown */}
-      {isItemOpen && item.children && (
-        <div className="  w-auto  flex-col gap-1   rounded-lg bg-white py-3   transition-all flex ">
+      {isItemOpen && item.children ? (
+        <div className="w-full h-fit  flex-col gap-0  bg-white py-2 transition-all flex">
           {item.children.map((ch, i) => (
             <div key={i}>
-              <div>
-                <Link
-                  href={ch.link ?? "#"}
-                  className=" flex cursor-pointer items-center  py-1 pl-6 pr-8  text-neutral-400 hover:text-black  "
-                >
-                  {/* item */}
-                  <span className="whitespace-nowrap text-base uppercase pl-3 ">
-                    {ch.label}
-                  </span>
-                </Link>
-              </div>
+              {ch.children?.slice(0, 4).map((chItem, indx) => (
+                <div key={indx}>
+                  <div>
+                    <Link
+                      href={chItem.link ?? "#"}
+                      className=" flex cursor-pointer items-center  text-zinc-500 hover:text-black border-b"
+                    >
+                      <span className="text-base capitalize pl-3 ">
+                        {chItem.label}
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

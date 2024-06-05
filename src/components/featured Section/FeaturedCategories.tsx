@@ -45,10 +45,10 @@ const FeaturedCategories = () => {
               <Image
                 src={e.url}
                 alt={e.title}
-                width={150}
-                height={75}
+                width={400}
+                height={400}
                 key={e.title}
-                className="rounded-full m-5"
+                className="flex flex-wrap m-5"
               />
               <p className="font-bold uppercase text-center">{e.title}</p>
             </Link>

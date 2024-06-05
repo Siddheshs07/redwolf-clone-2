@@ -1,5 +1,4 @@
 "use client";
-
 import { pressItems } from "@/constants/press-items";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
@@ -47,7 +46,7 @@ const Press = () => {
               width={130}
               height={100}
               key={e.title}
-              className="border-2 rounded-3xl m-5 "
+              className="m-5 "
             />
             {/* <p className="font-bold uppercase text-center">{e.title}</p> */}
           </div>

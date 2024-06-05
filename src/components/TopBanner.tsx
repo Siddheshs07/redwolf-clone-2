@@ -41,8 +41,8 @@ const TopBanner = () => {
             <Image
               src={e.url}
               alt={e.title}
-              width={150}
-              height={75}
+              width={165}
+              height={90}
               key={e.title}
             />
           </Link>

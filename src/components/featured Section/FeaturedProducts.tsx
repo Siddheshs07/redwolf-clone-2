@@ -1,21 +1,10 @@
-"use client";
-
-import { getProducts } from "@/redux/features/product-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
 import { dataProps } from "@/types";
+import { getFeaturedProducts } from "@/utils/fetchData";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
-type Props = {};
-const FeaturedProducts = (props: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const allProduct = useAppSelector((state) => state.products.data);
-  const products = allProduct?.filter((event: dataProps) => event.isFeatured);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+const FeaturedProducts = async () => {
+  const products = await getFeaturedProducts();
   return (
     <div className="flex flex-col ">
       <div>
@@ -23,11 +12,11 @@ const FeaturedProducts = (props: Props) => {
           Featured Products
         </h1>
       </div>
-      <div className="grid grid-cols-5 gap-4 border rounded-3xl m-2 max-md:grid-cols-1">
-        {products?.map((product: dataProps) => {
+      <div className="grid grid-cols-5  max-md:grid-cols-2">
+        {products?.slice(0, 10).map((product: dataProps) => {
           return (
             <div key={product._id}>
-              <div className="flex flex-col justify-between items-center  rounded-xl">
+              <div className="flex flex-col justify-between items-center gap-0 m-0 p-0">
                 <div className="flex justify-between">
                   <Link href={`/products/${product._id}`}>
                     <Image
@@ -35,7 +24,7 @@ const FeaturedProducts = (props: Props) => {
                       alt={product.brandName}
                       width={200}
                       height={200}
-                      className="p-4 w-80 h-96 rounded-[2.5rem]"
+                      className="p-4 w-80 h-96  bg-zinc-300 "
                     />
                   </Link>
                 </div>

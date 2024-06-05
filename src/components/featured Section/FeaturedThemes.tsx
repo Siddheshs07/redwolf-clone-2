@@ -42,8 +42,8 @@ const FeaturedTheme = () => {
               <Image
                 src={e.url}
                 alt={e.title}
-                width={150}
-                height={75}
+                width={300}
+                height={300}
                 key={e.title}
                 className="rounded-full m-5"
               />

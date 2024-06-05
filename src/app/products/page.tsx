@@ -1,23 +1,11 @@
-"use client";
-
 import { dataProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { getProducts } from "@/redux/features/product-slice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
-const ProductsPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const allProduct = useAppSelector((state) => state.products.data);
+import { getAllCloths } from "@/utils/fetchData";
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
-  // console.log(allProduct);
-
+const ProductsPage = async () => {
+  const allProduct = await getAllCloths();
   return (
     <div className=" flex flex-col">
       <div>
